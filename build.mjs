@@ -7,7 +7,9 @@ const r = await build({
   format: 'iife',
   platform: 'browser',
   target: ['es2022'],
-  minify: process.argv.includes('--minify'),
+  // Shipped builds are minified with no source map: not protection, just a
+  // smaller handle for casual reading. `--dev` keeps it readable for debugging.
+  minify: !process.argv.includes('--dev'),
   sourcemap: false,
   legalComments: 'none',
   logLevel: 'info',

@@ -54,6 +54,51 @@ What does not hold up:
 - The handshake itself must be passed out of band. If it travels over a
   monitored channel, so does the ability to read everything.
 
+## Reverse engineering
+
+This cannot be made immune, and no browser app can. Asking for that is asking
+for something the platform does not offer.
+
+A web app ships its own program to every visitor so that it can run. The
+bundle is on disk the moment the page loads; DevTools shows it, and a text
+editor shows the `src/` it was built from. Renaming identifiers, flattening
+control flow or splitting strings delays a curious reader for an afternoon.
+It does not slow down someone who is actually motivated, and — this is the
+part that gets missed — it does not improve your security either, because the
+security never depended on the source being unreadable.
+
+What the code being public actually costs you: nothing. The protocol is
+AES-GCM over an HKDF-derived key with the frame index in the AAD. That design
+is supposed to be public — Kerckhoffs's principle — and publishing it means
+people can check the construction instead of trusting it. An attacker who
+reads every line still cannot read a single symbol without the handshake,
+and the symbols are all they ever see.
+
+What is deliberately done anyway, because it is cheap and honest about what
+it is:
+
+- The shipped bundle is minified with no source map. This is a smaller
+  handle for casual reading, not a secret. `npm run build:dev` rebuilds it
+  unminified.
+- No debug handle is installed on a normal load: `window.rootnode` exists
+  only under `?debug=1`, so poking at live portal state takes a deliberate
+  step rather than a casual one.
+- No `eval`, no dynamic `Function` construction, no third-party scripts, no
+  CDN — nothing in the bundle can be swapped at runtime.
+
+What is fundamentally not fixable here:
+
+- The plaintext exists in memory while it is on screen. Anything running in
+  the page, or in the browser, or on the OS, can read it. A browser cannot
+  keep a secret from the machine it is running on.
+- Anyone can rebuild the app from source and change it. A modified copy that
+  *does* phone home would look like this one at a glance; the tripwires here
+  are a claim you can check in your own copy, not a guarantee about someone
+  else's.
+
+If reading the source has to become genuinely hard, the source has to stop
+being shipped — that means a native shell, not a better obfuscator.
+
 ## Development
 
 ```

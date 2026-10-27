@@ -664,6 +664,11 @@ async function boot() {
 
 boot();
 
-/* Console hook: lets you drive the terminal and decode a painted symbol from
-   devtools. It exposes no network and no storage surface. */
-window.rootnode = { state, run, transmitter, reassembly, decodeCanvas, Reassembly, Receiver, seal, sweep };
+/* Debug handle. Deliberately absent on a normal load: the default page gives
+   DevTools no ready-made entry point into live portal state. This is hygiene,
+   not secrecy — anyone reading the source can re-create the same object — so
+   the README is explicit that the protection is the ciphertext, not a hidden
+   handle. The verification harness opts in with `?debug=1`. */
+if (new URLSearchParams(location.search).has('debug')) {
+  window.rootnode = { state, run, transmitter, reassembly, decodeCanvas, Reassembly, Receiver, seal, sweep };
+}
