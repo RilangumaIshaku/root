@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>ROOT//NODE</title>
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="boot">
+
+<div id="crt">
+
+  <header id="topbar">
+    <span class="brand">ROOT<span class="dim">//</span>NODE</span>
+    <span class="meta" id="meta-net">NET <b>OFFLINE</b></span>
+    <span class="meta" id="meta-store">STORE <b>RAM-ONLY</b></span>
+    <span class="meta" id="meta-mode">MODE <b>IDLE</b></span>
+    <span class="meta clock" id="meta-clock">--:--:--</span>
+  </header>
+
+  <main id="grid">
+
+    <section id="stage" aria-label="optical channel">
+      <div class="stage-head">
+        <span class="lbl">OPTICAL CHANNEL</span>
+        <span class="val" id="stage-state">DARK</span>
+      </div>
+
+      <div class="stage-body">
+        <!-- transmitter surface -->
+        <canvas id="tx" width="560" height="560" hidden></canvas>
+
+        <!-- receiver viewfinder -->
+        <div id="rx" hidden>
+          <video id="vid" playsinline muted autoplay></video>
+          <div class="reticle" aria-hidden="true">
+            <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+          </div>
+          <div class="rxtint" aria-hidden="true"></div>
+        </div>
+
+        <!-- idle / seal plate -->
+        <div id="plate">
+          <div class="plate-inner">
+            <div class="glyph" id="plate-glyph">◍</div>
+            <div class="plate-txt" id="plate-txt">PORTAL CLOSED</div>
+            <div class="plate-sub" id="plate-sub">run <b>help</b> for commands</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-foot">
+        <span id="progress-txt">no carrier</span>
+        <span id="progress-bar" class="bar"><i style="width:0%"></i></span>
+      </div>
+    </section>
+
+    <section id="console">
+      <div id="scrollback" role="log" aria-live="polite"></div>
+
+      <div id="signal" hidden>
+        <div class="signal-head">
+          <span class="lbl">DECRYPTED SIGNAL</span>
+          <span class="burn" id="signal-burn">BURN --</span>
+        </div>
+        <div class="signal-body" id="signal-body"></div>
+        <div class="signal-foot">
+          <button type="button" id="signal-burn-now">BURN NOW</button>
+          <span id="signal-meta"></span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="promptbar">
+    <label for="cmdline"><span class="who">root@node</span><span class="at">:</span><span class="path" id="path">~</span><span class="at">$</span></label>
+    <div class="field">
+      <input id="cmdline" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus />
+      <span class="caret" aria-hidden="true"></span>
+    </div>
+  </footer>
+
+  <div id="flash" aria-hidden="true"></div>
+  <div id="noise" aria-hidden="true"></div>
+</div>
+
+<script src="./dist/bundle.js"></script>
+</body>
+</html>

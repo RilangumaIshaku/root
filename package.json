@@ -1,0 +1,27 @@
+{
+  "name": "root-node",
+  "version": "0.4.1",
+  "description": "One-shot optical messenger: a QR burst travels screen-to-camera, then everything burns.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "build:min": "node build.mjs --minify",
+    "test": "node test/roundtrip.mjs",
+    "serve": "npx --yes serve . -l 4173"
+  },
+  "keywords": [
+    "qr",
+    "ephemeral",
+    "air-gapped",
+    "messenger"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
